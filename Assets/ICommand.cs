@@ -39,21 +39,21 @@ public class JumpCommand : ICommand
     }
 
 }
-//public class InteractionCommand : ICommand
-//{
-//    private IInteractable target;
-//    playerController player;
-//
-//    public InteractCommand(IInteractable target)
-//    {
-//        this.target = target;
-//        this.player = target.player;
-//    }
-//
-//
-//    public void Execute()
-//    {
-//
-//    }
-//}
+public class InteractionCommand : ICommand
+{
+    private IInteractable target;
+    playerController player;
+
+    public InteractionCommand(IInteractable target, playerController player)
+    {
+        this.target = target;
+        this.player = player;
+    }
+
+
+    public void Execute()
+    {
+        target.Interact(player);
+    }
+}
 

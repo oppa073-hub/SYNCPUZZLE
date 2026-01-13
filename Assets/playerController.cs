@@ -45,11 +45,11 @@ public class playerController : MonoBehaviour
         }
 
     }
-    // public void PlayerInteraction(IInteractable target)
-    // {
-    //     ICommand cmd = new InteractCommand(target);
-    //     OnInteract?.Invoke(cmd);
-    // }
+    public void PlayerInteraction(IInteractable target)
+    {
+        ICommand cmd = new InteractionCommand(target,this);
+        OnInteract?.Invoke(cmd);
+    }
 
     private void GroundCheck()
     {
