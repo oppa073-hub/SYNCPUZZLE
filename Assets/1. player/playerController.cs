@@ -51,7 +51,6 @@ public class playerController : MonoBehaviour
     public void PlayerInteraction(IInteractable target)
     {
         ICommand cmd = new InteractionCommand(target,this);
-        isInteract = true;
         OnInteract?.Invoke(cmd);
         
     }

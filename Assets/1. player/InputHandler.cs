@@ -20,10 +20,15 @@ public class InputHandler : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
+        if (ctx.started)
         {
             if (player.target == null) return;
             player.PlayerInteraction(player.target);
         }
     }
+    private void OnEnable()
+    {
+        Debug.Log("InputHandler Enable");
+    }
+
 }
