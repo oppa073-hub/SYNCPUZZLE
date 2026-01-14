@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.GraphicsBuffer;
 public class InputHandler : MonoBehaviour
 {
     [SerializeField] playerController player;
@@ -15,5 +16,14 @@ public class InputHandler : MonoBehaviour
     {
         if (ctx.performed)
             player.PlayerJump();
+    }
+
+    public void OnInteract(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            if (player.target == null) return;
+            player.PlayerInteraction(player.target);
+        }
     }
 }

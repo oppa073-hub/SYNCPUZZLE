@@ -1,5 +1,6 @@
 ﻿using Photon.Realtime;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class playerController : MonoBehaviour
@@ -14,6 +15,8 @@ public class playerController : MonoBehaviour
     Animator animator;
     Vector2 moveDir;
     bool isGround;
+    bool isInteract = false;
+    public IInteractable target;
 
     public event Action<ICommand> OnInteract;
 
@@ -48,7 +51,9 @@ public class playerController : MonoBehaviour
     public void PlayerInteraction(IInteractable target)
     {
         ICommand cmd = new InteractionCommand(target,this);
+        isInteract = true;
         OnInteract?.Invoke(cmd);
+        
     }
 
     private void GroundCheck()
@@ -60,6 +65,19 @@ public class playerController : MonoBehaviour
            groundLayer);
 
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Interact")) return;
+        target = collision.GetComponentInParent<IInteractable>();
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Interact")) return;
+    
+        var t = collision.GetComponentInParent<IInteractable>();
+        if (t != null && t == target) target = null;
     }
 }
 
