@@ -1,14 +1,24 @@
 ﻿using Photon.Realtime;
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-public class playerController : MonoBehaviour
+using System.Collections;
+using Photon.Pun;
+
+public enum PlayerRole
 {
+    A, B
+}
+
+public class playerController : MonoBehaviourPun
+{
+    public PlayerRole role ;
     [SerializeField] float moveSpeed = 1.0f;
     [SerializeField] float jumpForce = 0f;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform groundChecker;
+    [SerializeField] private InputHandler inputHandler;
+    [SerializeField] private Camera playerCamera;
 
     private float groundCheckDistance = 0.1f;
     Rigidbody2D rigid;
@@ -16,6 +26,7 @@ public class playerController : MonoBehaviour
     Vector2 moveDir;
     bool isGround;
     bool isInteract = false;
+    bool isFaill = false;
     public IInteractable target;
 
     public event Action<ICommand> OnInteract;
@@ -31,8 +42,30 @@ public class playerController : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-    }
 
+    }
+    void Start()
+    {
+        if (!photonView.IsMine)
+        {
+            // 남의 캐릭터
+            playerCamera.gameObject.SetActive(false);
+            inputHandler.enabled = false;
+        }
+        else
+        {
+            // 내 캐릭터
+            playerCamera.gameObject.SetActive(true);
+            inputHandler.enabled = true;
+        }
+        if (!photonView.IsMine) return;
+
+        if (PhotonNetwork.IsMasterClient)
+            role = PlayerRole.A;
+        else
+            role = PlayerRole.B;
+        ApplyViewByRole();
+    }
     public void PlayerMove(Vector2 dir)
     {
         moveDir = dir;
@@ -77,6 +110,17 @@ public class playerController : MonoBehaviour
     
         var t = collision.GetComponentInParent<IInteractable>();
         if (t != null && t == target) target = null;
+    }
+    void ApplyViewByRole()
+    {
+        if (role == PlayerRole.A)
+        {
+            playerCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("SafeTileOnly"));
+        }
+        else // B
+        {
+            playerCamera.cullingMask |= (1 << LayerMask.NameToLayer("SafeTileOnly"));
+        }
     }
 }
 
