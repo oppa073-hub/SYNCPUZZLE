@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class NetworkManager : MonoBehaviourPunCallbacks
+public class RoomManager : MonoBehaviourPunCallbacks
 {
-    public static NetworkManager Instance { get; private set; }
+    public static RoomManager Instance { get; private set; }
     private void Awake()
     {
         Instance = this;
