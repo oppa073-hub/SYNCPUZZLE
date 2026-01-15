@@ -76,4 +76,8 @@ Assets/_LocalAssets.meta
 # Assets/_Temp.meta
 # Firebase native desktop binaries (over 100MB, not needed)
 Assets/Firebase/Plugins/x86_64/**
+**/google-services*.json
+**/GoogleService-Info.plist
+**/*.keystore
+**/*.jks
 
