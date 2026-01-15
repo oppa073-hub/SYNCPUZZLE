@@ -29,10 +29,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("로비 들어옴");
     }
-    public void JoinRoom()
-    {
-        PhotonNetwork.JoinRoom(joinRoomInput.text);
-    }
+   
     public void CreateRoom()
     {
         PhotonNetwork.CreateRoom(createRoomInput.text, new RoomOptions { MaxPlayers = 2 });  //인풋필드에 들어있던 내용의 이름으로 방 생성
@@ -64,11 +61,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
            
             if (roomHas.TryGetValue(roomInfo.Name, out roomButtonGO))
             {
-                roomButtonGO.GetComponentInChildren<TMP_Text>().text = roomInfo.Name;
+                roomButtonGO.GetComponent<RoomEntryUI>().SetRoom(roomInfo.Name);
             }
             else
             {
                 var room = Instantiate(roomButtonPrefab, roomListPanel);
+                room.GetComponent<RoomEntryUI>().SetRoom(roomInfo.Name);
                 roomHas[roomInfo.Name] = room;
                 room.GetComponentInChildren<TMP_Text>().text = roomInfo.Name;
             }
