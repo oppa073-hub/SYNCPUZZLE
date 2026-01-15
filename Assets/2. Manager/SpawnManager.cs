@@ -31,17 +31,15 @@ public class SpawnManager : MonoBehaviourPunCallbacks
  
     private  void Start()
     {
-        WaitRoom();
-        if (!HasLocalPlayer())
+        if (!HasLocalPlayer() && Spawn.Count > 0)
         {
             StartCoroutine(SpawnPlayerWhenConnected());  //룸에 접속했을때 플레이어 스폰
         }
-      if (playerPrefab.tag == playerPrefab.name) return;
-
     }
     IEnumerator SpawnPlayerWhenConnected()
     {
         yield return new WaitUntil(() => PhotonNetwork.InRoom);
+        if (HasLocalPlayer()) yield break;
         player = PhotonNetwork.LocalPlayer;
         int raw = player.ActorNumber - 1;
         index = Math.Clamp(raw, 0, Spawn.Count - 1);
