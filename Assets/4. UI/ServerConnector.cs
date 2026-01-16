@@ -20,7 +20,7 @@ public class ServerConnector : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("마스터 서버 연결");
-        SceneManager.LoadScene("LobbyScene");
+        SceneManager.LoadScene("Lobby");
     }
 
 }

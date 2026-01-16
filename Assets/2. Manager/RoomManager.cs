@@ -11,6 +11,11 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public static RoomManager Instance { get; private set; }
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
     }
     private void Start()
@@ -22,7 +27,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
   
     public override void OnLeftRoom()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Lobby");
     }
 
     public void LeaveRoom()
@@ -53,7 +58,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient == true)
         {
-            PhotonNetwork.LoadLevel("InGameScene");  //네트워크상에서 씬 바꾸는 것
+            PhotonNetwork.LoadLevel("InGame");  //네트워크상에서 씬 바꾸는 것
         }
     }
 

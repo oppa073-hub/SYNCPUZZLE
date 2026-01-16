@@ -14,11 +14,22 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] GameObject roomButtonPrefab;
     [SerializeField] Transform roomListPanel;
     Dictionary<string, GameObject> roomHas;
-  
+
+    [SerializeField] Button createBtn;
+    [SerializeField] Button joinBtn;
+    [SerializeField] Button randomBtn;
+    [SerializeField] Button exitBtn;
     private void Start()
     {
         roomHas = new Dictionary<string, GameObject>();
-        PhotonNetwork.ConnectUsingSettings();
+        createBtn.interactable = false;
+        joinBtn.interactable = false;
+        randomBtn.interactable = false;
+
+       if (!PhotonNetwork.IsConnected)
+            PhotonNetwork.ConnectUsingSettings();
+        else if (!PhotonNetwork.InLobby)
+            PhotonNetwork.JoinLobby();
     }
 
     public override void OnConnectedToMaster()
@@ -28,30 +39,57 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         Debug.Log("로비 들어옴");
+
+        createBtn.interactable = true;
+        joinBtn.interactable = true;
+        randomBtn.interactable = true;
     }
    
     public void CreateRoom()
     {
+        Debug.Log($"State={PhotonNetwork.NetworkClientState} InLobby={PhotonNetwork.InLobby} InRoom={PhotonNetwork.InRoom} IsConnected={PhotonNetwork.IsConnected}");
+
         PhotonNetwork.CreateRoom(createRoomInput.text, new RoomOptions { MaxPlayers = 2 });  //인풋필드에 들어있던 내용의 이름으로 방 생성
     }
     public void JoinRandomRoom()
     {
-        //PhotonNetwork.JoinRandomRoom();
+        Debug.Log($"State={PhotonNetwork.NetworkClientState} InLobby={PhotonNetwork.InLobby} InRoom={PhotonNetwork.InRoom} IsConnected={PhotonNetwork.IsConnected}");
+
+        if (!PhotonNetwork.InLobby)
+        {
+            Debug.Log("아직 로비 접속중");
+            return;
+        }
         PhotonNetwork.JoinRandomOrCreateRoom();
+    }
+    public override void OnLeftLobby()
+    {
+        createBtn.interactable = false;
+        joinBtn.interactable = false;
+        randomBtn.interactable = false;
     }
     public void JoinRoom()
     {
-        PhotonNetwork.JoinRoom(joinRoomInput.text);
-        // PhotonNetwork.JoinOrCreateRoom();  //방을 찾아보고 ㅇ벗으면 그이름으로 방 생성
+        Debug.Log($"State={PhotonNetwork.NetworkClientState} InLobby={PhotonNetwork.InLobby} InRoom={PhotonNetwork.InRoom} IsConnected={PhotonNetwork.IsConnected}");
+
+        if (PhotonNetwork.InLobby == true)
+        {
+            PhotonNetwork.JoinRoom(joinRoomInput.text);
+        }
+        else
+        {
+            Debug.Log("아직 로비 접속중");
+            return;
+        }
     }
     public override void OnJoinedRoom()
     {
-      
+        PhotonNetwork.LoadLevel("Room");
     }
     public void ExitLobby()
     {
         PhotonNetwork.LeaveLobby();  //로비 떠나라고 포톤에게 지시
-        SceneManager.LoadScene("TitleScene");
+        SceneManager.LoadScene("Title");
     }
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {

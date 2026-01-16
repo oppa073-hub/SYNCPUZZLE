@@ -89,7 +89,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 34
-    OrthographicSize: 37.57556
+    OrthographicSize: 5.516712
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -136,10 +136,14 @@ GameObject:
   m_Component:
   - component: {fileID: 5340112408868840615}
   - component: {fileID: 7024513360584095227}
+  - component: {fileID: 3115341909556058152}
+  - component: {fileID: 3643419958625166000}
   - component: {fileID: 867181877036972328}
   - component: {fileID: 1810824065884294742}
   - component: {fileID: 561715154893708701}
   - component: {fileID: 279644306334380183}
+  - component: {fileID: -4762810408005093838}
+  - component: {fileID: 3572874215742811581}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -222,6 +226,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3115341909556058152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4886046711511212362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95d571ad98fe9f244b4161fb6bf1f485, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CommandProcessor
+  player: {fileID: 867181877036972328}
+--- !u!114 &3643419958625166000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4886046711511212362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea4b0503f0141fd43a92e0e59b303a70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputHandler
+  player: {fileID: 867181877036972328}
 --- !u!114 &867181877036972328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,6 +271,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   groundChecker: {fileID: 3557834485613668585}
+  inputHandler: {fileID: 3643419958625166000}
+  playerCamera: {fileID: 2695600043634649622}
+  mainCam: {fileID: 0}
 --- !u!70 &1810824065884294742
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -332,7 +365,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3643419958625166000}
         m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
         m_MethodName: OnMove
         m_Mode: 0
@@ -356,7 +389,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Attack[/Mouse/leftButton,/Touchscreen/primaryTouch/tap,/Keyboard/enter]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3643419958625166000}
         m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
         m_MethodName: OnInteract
         m_Mode: 0
@@ -376,7 +409,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Crouch[/Keyboard/c]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3643419958625166000}
         m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
         m_MethodName: OnJump
         m_Mode: 0
@@ -447,3 +480,59 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &-4762810408005093838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4886046711511212362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonView
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 3572874215742811581}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &3572874215742811581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4886046711511212362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonTransformViewClassic
+  m_PositionModel:
+    SynchronizeEnabled: 1
+    TeleportEnabled: 1
+    TeleportIfDistanceGreaterThan: 3
+    InterpolateOption: 2
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 1
+    ExtrapolateOption: 0
+    ExtrapolateSpeed: 1
+    ExtrapolateIncludingRoundTripTime: 1
+    ExtrapolateNumberOfStoredPositions: 1
+  m_RotationModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 1
+    InterpolateRotateTowardsSpeed: 180
+    InterpolateLerpSpeed: 5
+  m_ScaleModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 0
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 0

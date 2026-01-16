@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using Photon.Pun;
+using Unity.Cinemachine;
 
 public enum PlayerRole
 {
@@ -18,7 +19,8 @@ public class playerController : MonoBehaviourPun
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform groundChecker;
     [SerializeField] private InputHandler inputHandler;
-    [SerializeField] private Camera playerCamera;
+    [SerializeField] private CinemachineCamera playerCamera;
+    [SerializeField] private Camera mainCam;
 
     private float groundCheckDistance = 0.1f;
     Rigidbody2D rigid;
@@ -42,6 +44,7 @@ public class playerController : MonoBehaviourPun
     {
         rigid = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        if (mainCam == null) mainCam = Camera.main;
 
     }
     void Start()
@@ -115,11 +118,11 @@ public class playerController : MonoBehaviourPun
     {
         if (role == PlayerRole.A)
         {
-            playerCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("SafeTileOnly"));
+            mainCam.cullingMask &= ~(1 << LayerMask.NameToLayer("SafeTileOnly"));
         }
         else // B
         {
-            playerCamera.cullingMask |= (1 << LayerMask.NameToLayer("SafeTileOnly"));
+            mainCam.cullingMask |= (1 << LayerMask.NameToLayer("SafeTileOnly"));
         }
     }
 }
