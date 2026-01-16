@@ -12,7 +12,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
     private void Awake()
     {
         Instance = this;
-        PhotonNetwork.AutomaticallySyncScene = true;
     }
     private void Start()
     {
