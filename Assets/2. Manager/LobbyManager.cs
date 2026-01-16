@@ -39,11 +39,20 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         //PhotonNetwork.JoinRandomRoom();
         PhotonNetwork.JoinRandomOrCreateRoom();
     }
+    public void JoinRoom()
+    {
+        PhotonNetwork.JoinRoom(joinRoomInput.text);
+        // PhotonNetwork.JoinOrCreateRoom();  //방을 찾아보고 ㅇ벗으면 그이름으로 방 생성
+    }
     public override void OnJoinedRoom()
     {
-        SceneManager.LoadScene("RoomScene");
+      
     }
-
+    public void ExitLobby()
+    {
+        PhotonNetwork.LeaveLobby();  //로비 떠나라고 포톤에게 지시
+        SceneManager.LoadScene("TitleScene");
+    }
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         GameObject roomButtonGO;
