@@ -3,13 +3,13 @@ using System;
 
 public class TestDoor : MonoBehaviour, IInteractable
 {
-    [SerializeField] GameObject door;
-
+    [SerializeField] int puzzleId = 1;
     public void Interact(playerController player)
     {
-        PuzzleManager.Instance.OnButtonPressed(this, player);
-        if (door != null) door.SetActive(false);
-        else Debug.LogWarning("door가 연결 안 됨");
+        if (!player.photonView.IsMine) return;
+        //PuzzleManager.Instance.OnButtonPressed(this, player);
+        PuzzleManager.Instance.RequestPress(puzzleId, 0, 1);
+
     }
 
 }
