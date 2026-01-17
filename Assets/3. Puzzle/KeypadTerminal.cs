@@ -1,0 +1,22 @@
+﻿using UnityEngine;
+using UnityEngine.UI;
+
+public class KeypadTerminal : MonoBehaviour, IInteractable
+{
+    [SerializeField] int puzzleId = 3;
+    public void Interact(playerController player)
+    {
+        if (!player.photonView.IsMine) return;
+        UIManager.Instance.OpenKeyPad(puzzleId);
+    }
+
+    public void OnClickEnterBtn()
+    {
+        UIManager.Instance.OnKeypadEnter();
+    }
+    public void OnClickExitBtn()
+    {
+        UIManager.Instance.CloseKeyPad();
+    }
+
+}
