@@ -14,20 +14,6 @@ public class UIManager : MonoBehaviour
         }
         Instance = this;
     }
-    /*
-     * OpenKeypad(int puzzleId) : 패널 켜고 puzzleId 저장
-
-       CloseKeypad() : 패널 끄기
-       
-       OnKeypadNumber(int n) : RequestPress(puzzleId, action=0, value=n)
-       
-       OnKeypadBack() : RequestPress(puzzleId, action=1, value=0)
-       
-       OnKeypadClear() : RequestPress(puzzleId, action=2, value=0)
-       
-       OnKeypadEnter() : RequestPress(puzzleId, action=3, value=0)
-     * 
-     */
 
     [SerializeField] GameObject KeypadPanel;
     [SerializeField] 
@@ -39,10 +25,12 @@ public class UIManager : MonoBehaviour
     public void OpenKeyPad()
     {
         KeypadPanel.SetActive(true);
+        PuzzleManager.Instance.RequestPress(3, 9, 0);
     }
     public void CloseKeyPad()
     {
         KeypadPanel.SetActive(false);
+        PuzzleManager.Instance.RequestPress(3, 8, 0);
     }
     public void OnKeypadNumber(int n)
     {

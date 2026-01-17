@@ -1,7 +1,8 @@
-﻿using System.Collections;
-using UnityEngine;
-using Photon.Pun;
+﻿using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.U2D.IK;
 
 public class PuzzleManager : MonoBehaviourPun
 {
@@ -26,6 +27,14 @@ public class PuzzleManager : MonoBehaviourPun
     [Header("Puzzle 2 (Sync Buttons)")]
     [SerializeField] private float syncWindow = 1.0f; // 몇 초 안에 같이 눌러야 성공?
     [SerializeField] private GameObject door2;         // 성공 시 열 문(비활성화)
+
+    [Header("Puzzle 3 (Password)")]
+    string password = "2580";
+    string inputPassword = "";
+    int maxLen = 4;
+    bool passwordSolved = false;
+    int keypadOwnerActor = -1;
+    [SerializeField] private GameObject blocker;
     #endregion
 
     #region Sync Puzzle Runtime State
@@ -55,6 +64,7 @@ public class PuzzleManager : MonoBehaviourPun
         if (b.ButtonId == "A") buttonARef = b;
         else if (b.ButtonId == "B") buttonBRef = b;
     }
+
     #endregion
 
     #region RPC - Master Judge
@@ -95,6 +105,53 @@ public class PuzzleManager : MonoBehaviourPun
                 }
             }
         }
+        if (puzzleId == 3)
+        {
+            if (passwordSolved == true) return;
+            if (action == 9)
+            {
+                if (keypadOwnerActor == -1)
+                {
+                    keypadOwnerActor = info.Sender.ActorNumber;
+                    inputPassword = "";
+                }
+            }
+            if (action == 8)
+            {
+                if (info.Sender.ActorNumber == keypadOwnerActor)
+                {
+                    keypadOwnerActor = -1;
+                    inputPassword = "";
+                }
+            }
+            if (action == 0)
+            {
+                if (info.Sender.ActorNumber != keypadOwnerActor) return;
+                if (inputPassword.Length < maxLen)
+                {
+                    inputPassword += value.ToString();
+                }
+            }
+            if (action == 1)
+            {
+                if (info.Sender.ActorNumber != keypadOwnerActor) return;
+                if (inputPassword == password)
+                {
+                    passwordSolved = true;
+                    keypadOwnerActor = -1;
+                    inputPassword = "";
+                    photonView.RPC(nameof(RPC_ApplyResult), RpcTarget.All, puzzleId, passwordSolved);
+      
+                }
+                else
+                {
+                    passwordSolved = false;
+                    inputPassword = "";
+         
+                }
+            }
+          
+        }
     }
     #endregion
 
@@ -124,6 +181,14 @@ public class PuzzleManager : MonoBehaviourPun
                 // 실패면 둘 다 리셋 비주얼
                 buttonARef?.ResetVisual();
                 buttonBRef?.ResetVisual();
+            }
+        }
+        if (puzzleId == 3)
+        {
+            if (solved)
+            {
+                UIManager.Instance.CloseKeyPad();
+                blocker.SetActive(false);
             }
         }
     }
