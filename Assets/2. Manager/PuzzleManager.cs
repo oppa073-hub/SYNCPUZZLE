@@ -18,6 +18,13 @@ public class PuzzleManager : MonoBehaviourPun
             return;
         }
     }
+    private void Start()
+    {
+        leverAnswer[0] = true;
+        leverAnswer[1] = false;
+        leverAnswer[2] = false;
+        leverAnswer[3] = true;
+    }
     #endregion
 
     #region Inspector - Puzzle Targets
@@ -35,6 +42,22 @@ public class PuzzleManager : MonoBehaviourPun
     bool passwordSolved = false;
     int keypadOwnerActor = -1;
     [SerializeField] private GameObject blocker;
+
+    [Header("Puzzle 4 (SwitchMatrix (Lever))")]
+    [SerializeField] private GameObject blocker2;
+    private bool[] leverAnswer = new bool[4];
+    private bool[] leverState = new bool[4];
+    private SwitchMatrix[] levers = new SwitchMatrix[4];
+    bool switchMatrixSolved = false;
+    private bool[] leverLocked = new bool[4];  // 눌렀으면 잠금
+    private int pressedCount = 0;              // 지금까지 누른 개수
+    private int answerTrueCount = 2;
+    public void RegisterLever(int index, SwitchMatrix lever)
+    {
+        if (index < 0 || index >= levers.Length) return;
+        levers[index] = lever;
+    }
+
     #endregion
 
     #region Sync Puzzle Runtime State
@@ -63,6 +86,11 @@ public class PuzzleManager : MonoBehaviourPun
     {
         if (b.ButtonId == "A") buttonARef = b;
         else if (b.ButtonId == "B") buttonBRef = b;
+    }
+
+    public void RequestPressLever(int puzzleId, int action, int value)
+    {
+        photonView.RPC(nameof(RPC_RequestPress), RpcTarget.MasterClient, puzzleId, action, value);
     }
 
     #endregion
@@ -95,7 +123,7 @@ public class PuzzleManager : MonoBehaviourPun
                 float diff = Mathf.Abs(lastPressTimeA - lastPressTimeB);
                 bool solved = diff <= syncWindow;
 
-               
+
                 photonView.RPC(nameof(RPC_ApplyResult), RpcTarget.All, puzzleId, solved);
 
                 if (!solved)
@@ -141,7 +169,7 @@ public class PuzzleManager : MonoBehaviourPun
                     keypadOwnerActor = -1;
                     inputPassword = "";
                     photonView.RPC(nameof(RPC_ApplyResult), RpcTarget.All, puzzleId, passwordSolved);
-      
+
                 }
                 else
                 {
@@ -151,7 +179,33 @@ public class PuzzleManager : MonoBehaviourPun
                     photonView.RPC(nameof(RPC_ApplyResult), RpcTarget.All, puzzleId, false);
                 }
             }
-          
+
+        }
+        if (puzzleId == 4)
+        {
+            if (switchMatrixSolved) return;
+            if (leverLocked[action]) return;
+            leverLocked[action] = true;
+            leverState[action] = true;
+            pressedCount++;
+            photonView.RPC(nameof(RPC_ApplyPressedVisual), RpcTarget.All, puzzleId, action);
+            if (pressedCount < answerTrueCount) return;
+            bool solved = true;
+            for (int i = 0; i < leverAnswer.Length; i++)
+            {
+                if (leverAnswer[i] != leverState[i])
+                {
+                    solved = false;
+                    break;
+                }
+            }
+            photonView.RPC(nameof(RPC_ApplyResult), RpcTarget.All, puzzleId, solved);
+            if (!solved)
+            {
+                for (int i = 0; i < leverState.Length; i++) leverState[i] = false;
+                for (int i = 0; i < leverLocked.Length; i++) leverLocked[i] = false;
+                pressedCount = 0;
+            }
         }
     }
     #endregion
@@ -196,15 +250,40 @@ public class PuzzleManager : MonoBehaviourPun
                 UIManager.Instance.OnKeypadFail();
             }
         }
+        if (puzzleId == 4)
+        {
+            if (switchMatrixSolved) return;
+            if (solved)
+            {
+                if (blocker2) blocker2.SetActive(false);
+                for (int i = 0; i < leverAnswer.Length; i++)
+                {
+                    levers[i]?.SetSolved(solved);
+                }
+                switchMatrixSolved = true;
+            }
+            else
+            {
+                for (int i = 0; i < leverAnswer.Length; i++)
+                {
+                    levers[i]?.ResetVisual();
+                }
+            }
+        }
     }
 
     [PunRPC]
     void RPC_ApplyPressedVisual(int puzzleId, int action)
     {
-        if (puzzleId != 2) return;
-
-        if (action == 0) buttonARef?.SetPressedVisual();
-        if (action == 1) buttonBRef?.SetPressedVisual();
+        if (puzzleId == 2)
+        {
+            if (action == 0) buttonARef?.SetPressedVisual();
+            if (action == 1) buttonBRef?.SetPressedVisual();
+        }
+        if (puzzleId == 4)
+        {
+            levers[action].SetPressedVisual();
+        }
     }
     #endregion
 
