@@ -2,7 +2,7 @@
 using TMPro;
 public class KeypadUI : MonoBehaviour
 {
-    [SerializeField] TextMeshPro inputPasswordText;
+    [SerializeField] TMP_Text inputPasswordText;
 
     public void InputPasswordText(string passwordText)
     {

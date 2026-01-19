@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -18,7 +19,8 @@ public class UIManager : MonoBehaviour
     }
 
     [SerializeField] GameObject KeypadPanel;
-    [SerializeField] TextMeshPro inputPasswordText;
+    [SerializeField] TMP_Text inputPasswordText;
+    [SerializeField] Image inputTextPanel;
     private void Start()
     {
         KeypadPanel.SetActive(false);
@@ -56,6 +58,16 @@ public class UIManager : MonoBehaviour
         if (inputPasswordText.text.Length >= 4) return;
         inputPasswordText.text += passwordText;
     }
-
-
+    public void OnKeypadFail()
+    {
+        StartCoroutine(KeypadFailColor());
+    }
+    IEnumerator KeypadFailColor()
+    {
+        Debug.Log("FailColor 시작");
+        Color color = inputTextPanel.color;
+        inputTextPanel.color = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        inputTextPanel.color = color;
+    }
 }

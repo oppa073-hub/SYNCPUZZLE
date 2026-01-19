@@ -29,7 +29,7 @@ public class PuzzleManager : MonoBehaviourPun
     [SerializeField] private GameObject door2;         // 성공 시 열 문(비활성화)
 
     [Header("Puzzle 3 (Password)")]
-    string password = "2580";
+    string password = "2581";
     string inputPassword = "";
     int maxLen = 4;
     bool passwordSolved = false;
@@ -147,7 +147,8 @@ public class PuzzleManager : MonoBehaviourPun
                 {
                     passwordSolved = false;
                     inputPassword = "";
-         
+
+                    photonView.RPC(nameof(RPC_ApplyResult), RpcTarget.All, puzzleId, false);
                 }
             }
           
@@ -189,6 +190,10 @@ public class PuzzleManager : MonoBehaviourPun
             {
                 UIManager.Instance.CloseKeyPad();
                 blocker.SetActive(false);
+            }
+            else
+            {
+                UIManager.Instance.OnKeypadFail();
             }
         }
     }
