@@ -24,6 +24,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         KeypadPanel.SetActive(false);
+        mirrorPuzzleHintPanel.SetActive(false);
     }
 
     public void OpenKeyPad(int puzzleId)
@@ -69,5 +70,17 @@ public class UIManager : MonoBehaviour
         inputTextPanel.color = Color.red;
         yield return new WaitForSeconds(0.2f);
         inputTextPanel.color = color;
+    }
+
+
+
+    [SerializeField] private GameObject mirrorPuzzleHintPanel;
+    public void OpenMirrorPuzzleHint()
+    {
+        mirrorPuzzleHintPanel.SetActive(true);
+    }
+    public void CloseMirrorPuzzleHint()
+    {
+        mirrorPuzzleHintPanel.SetActive(false);
     }
 }

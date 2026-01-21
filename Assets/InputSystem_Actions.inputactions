@@ -991,6 +991,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "MirrorPuzzle",
+            "id": "fef65c42-761d-498c-8f21-fd105230e985",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "3219bb80-e765-4665-9e68-3fca1f68bb96",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2d55f8a9-f26c-49bf-a33b-b9a072950f86",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
