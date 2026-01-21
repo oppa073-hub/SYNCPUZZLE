@@ -9,6 +9,7 @@ public class PuzzleModeManager : MonoBehaviour
     CinemachineCamera playerCam;
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private MirrorBoardInput mirrorBoard;
 
     private void Awake()
     {
@@ -31,7 +32,8 @@ public class PuzzleModeManager : MonoBehaviour
         puzzleCam.Priority = 20;
 
         UIManager.Instance.OpenMirrorPuzzleHint();
-
+        mirrorBoard.SetPlayerInput(playerInput);
+        mirrorBoard.enabled = true;
     }
     public void ExitPuzzleModel()
     {
@@ -42,6 +44,9 @@ public class PuzzleModeManager : MonoBehaviour
         if (currentPuzzleCam != null) currentPuzzleCam.Priority = 0;
 
         playerCam.Priority = 10;
+
+        mirrorBoard.ClearPlayerInput();
+        mirrorBoard.enabled = false;
     }
 
 }

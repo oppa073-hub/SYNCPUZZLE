@@ -997,7 +997,7 @@
             "id": "fef65c42-761d-498c-8f21-fd105230e985",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "Click",
                     "type": "Button",
                     "id": "3219bb80-e765-4665-9e68-3fca1f68bb96",
                     "expectedControlType": "",
@@ -1014,7 +1014,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
