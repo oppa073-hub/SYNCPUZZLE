@@ -15,12 +15,10 @@ public class PuzzleModeManager : MonoBehaviour
     {
         Instance = this;
     }
-    private void Start()
-    {
-        playerCam = playerPrefab.GetComponentInChildren<CinemachineCamera>();
-    }
+ 
     public void EnterPuzzleMode(CinemachineCamera puzzleCam, PlayerInput plInput)
     {
+        playerCam = plInput.GetComponentInChildren<CinemachineCamera>();
         playerInput = plInput;
         playerInput.SwitchCurrentActionMap("MirrorPuzzle");
         Cursor.visible = true;
@@ -29,7 +27,7 @@ public class PuzzleModeManager : MonoBehaviour
         currentPuzzleCam = puzzleCam;
 
         playerCam.Priority = 0;
-        puzzleCam.Priority = 20;
+        puzzleCam.Priority = 10;
 
         UIManager.Instance.OpenMirrorPuzzleHint();
         mirrorBoard.SetPlayerInput(playerInput);
@@ -39,7 +37,7 @@ public class PuzzleModeManager : MonoBehaviour
     {
         playerInput.SwitchCurrentActionMap("Player");
        // Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
 
         if (currentPuzzleCam != null) currentPuzzleCam.Priority = 0;
 

@@ -3,11 +3,10 @@ using UnityEngine.InputSystem;
 
 public class MirrorBoardInput : MonoBehaviour
 {
-    [SerializeField] private Camera cam;
-    [SerializeField] private LayerMask mirrorLayer;
-    [SerializeField] private float stepAngle = 15f;
-    private Transform selectedPivot;
-
+    [SerializeField] private Camera puzzleCam;
+    [SerializeField] private LayerMask mirrorHitLayer;
+    [SerializeField] private float clickRadius = 0.15f;
+    int puzzleId = 5;
     private PlayerInput playerInput;
     private InputAction clickAction;
 
@@ -35,23 +34,20 @@ public class MirrorBoardInput : MonoBehaviour
     }
     public void OnClick(InputAction.CallbackContext ctx)
     {
-        Debug.Log("OnClick 들어옴");
+       
         if (!ctx.performed) return;
 
-        Vector3 mp = Mouse.current.position.ReadValue();
-        mp.z = Mathf.Abs(cam.transform.position.z); 
-        Vector3 worldPos3 = cam.ScreenToWorldPoint(mp);
-        Vector2 worldPos = new Vector2(worldPos3.x, worldPos3.y);
-        Collider2D hit = Physics2D.OverlapCircle(worldPos, 0.1f, mirrorLayer);
+        Vector3 mousePos = Mouse.current.position.ReadValue();
+        mousePos.z = Mathf.Abs(puzzleCam.transform.position.z);
+        Vector2 worldPos = puzzleCam.ScreenToWorldPoint(mousePos);
+        Collider2D hit = Physics2D.OverlapCircle(worldPos, clickRadius, mirrorHitLayer);
         if (hit == null) return;
 
-        selectedPivot = hit.transform.GetComponentInParent<MirrorPivotTag>()?.transform;
+        MirrorController mirror = hit.GetComponentInParent<MirrorController>();
+        if (mirror == null) return;
 
-        if (selectedPivot == null) return;
-
-
-        selectedPivot.Rotate(0, 0, stepAngle);
-     
+        // 마스터에게 회전 요청
+        PuzzleManager.Instance.RequestPress(puzzleId, 0, mirror.mirrorIndex);
     }
 }
 

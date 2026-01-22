@@ -1,8 +1,10 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.U2D.IK;
+using System.Collections.Generic;
 
 public class PuzzleManager : MonoBehaviourPun
 {
@@ -17,13 +19,17 @@ public class PuzzleManager : MonoBehaviourPun
             Destroy(gameObject);
             return;
         }
+        mirrors = new Dictionary<int, MirrorController>(mirrorCount);
+        mirrorStep = new int[mirrorCount];
+        sensorLit = new bool[sensorCount];
     }
     private void Start()
     {
         leverAnswer[0] = true;
         leverAnswer[1] = false;
         leverAnswer[2] = false;
-        leverAnswer[3] = true;
+        leverAnswer[3] = true; 
+        mirrorPuzzleSolved = false;
     }
     #endregion
 
@@ -52,6 +58,15 @@ public class PuzzleManager : MonoBehaviourPun
     private bool[] leverLocked = new bool[4];  // 눌렀으면 잠금
     private int pressedCount = 0;              // 지금까지 누른 개수
     private int answerTrueCount = 2;
+
+    [Header("Puzzle 5 (Mirror)")]
+    [SerializeField] private GameObject mirrorDoor;  
+    [SerializeField] private int mirrorCount = 3;
+    [SerializeField] private int sensorCount = 2;
+    Dictionary<int, MirrorController> mirrors;
+    private int[] mirrorStep;          // 거울 회전 상태
+    private bool[] sensorLit;           // 센서 상태 (마스터 기준)
+    private bool mirrorPuzzleSolved;
     public void RegisterLever(int index, SwitchMatrix lever)
     {
         if (index < 0 || index >= levers.Length) return;
@@ -93,6 +108,10 @@ public class PuzzleManager : MonoBehaviourPun
         photonView.RPC(nameof(RPC_RequestPress), RpcTarget.MasterClient, puzzleId, action, value);
     }
 
+    public void RegisterMirror(int index, MirrorController mirror)
+    {
+        mirrors[index] = mirror;
+    }
     #endregion
 
     #region RPC - Master Judge
@@ -207,6 +226,50 @@ public class PuzzleManager : MonoBehaviourPun
                 pressedCount = 0;
             }
         }
+        if (puzzleId == 5)
+        {
+            if (mirrorPuzzleSolved) return;
+            if (action == 0)
+            {
+                int mirrorIndex = value;
+
+                mirrorStep[mirrorIndex]++;
+                mirrorStep[mirrorIndex] %= 4;
+
+                photonView.RPC(
+                    nameof(RPC_ApplyMirrorRotate),
+                    RpcTarget.All,
+                    mirrorIndex,
+                    mirrorStep[mirrorIndex]
+                );
+            }
+
+            // action 1 : 센서 ON
+            if (action == 1)
+            {
+                int sensorIndex = value;
+
+                if (sensorLit[sensorIndex]) return;
+                sensorLit[sensorIndex] = true;
+                Debug.Log($"Sensor {sensorIndex} ON");
+                Debug.Log($"Sensor states: {string.Join(",", sensorLit)}");
+                bool allOn = true;
+                for (int i = 0; i < sensorLit.Length; i++)
+                {
+                    if (!sensorLit[i])
+                    {
+                        allOn = false;
+                        break;
+                    }
+                }
+              
+                if (allOn)
+                {
+                    mirrorPuzzleSolved = true;
+                    photonView.RPC(nameof(RPC_ApplyResult), RpcTarget.All, 5, true);
+                }
+            }
+        }
     }
     #endregion
 
@@ -270,6 +333,14 @@ public class PuzzleManager : MonoBehaviourPun
                 }
             }
         }
+        if (puzzleId == 5)
+        {
+            if (solved)
+            {
+                mirrorDoor.SetActive(false);
+            }
+
+        }
     }
 
     [PunRPC]
@@ -284,6 +355,17 @@ public class PuzzleManager : MonoBehaviourPun
         {
             levers[action].SetPressedVisual();
         }
+    }
+    [PunRPC]
+    void RPC_ApplyMirrorRotate(int mirrorIndex, int step)
+    {
+        if (!mirrors.TryGetValue(mirrorIndex, out MirrorController mirror))
+            return;
+
+        mirror.ApplyStep(step);
+        mirror.PlayRotateFx();
+
+        //연출 넣기 가능
     }
     #endregion
 
