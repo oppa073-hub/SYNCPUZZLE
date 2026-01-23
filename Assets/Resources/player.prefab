@@ -274,6 +274,7 @@ MonoBehaviour:
   inputHandler: {fileID: 3643419958625166000}
   playerCamera: {fileID: 2695600043634649622}
   mainCam: {fileID: 0}
+  currentNpc: {fileID: 0}
 --- !u!70 &1810824065884294742
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

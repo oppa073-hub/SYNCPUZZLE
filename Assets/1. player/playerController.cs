@@ -21,7 +21,7 @@ public class playerController : MonoBehaviourPun
     [SerializeField] private InputHandler inputHandler;
     [SerializeField] private CinemachineCamera playerCamera;
     [SerializeField] private Camera mainCam;
-
+    public NPCInteract currentNpc;
     private float groundCheckDistance = 0.1f;
     Rigidbody2D rigid;
     Animator animator;
@@ -45,7 +45,6 @@ public class playerController : MonoBehaviourPun
         rigid = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         if (mainCam == null) mainCam = Camera.main;
-
     }
     void Start()
     {
@@ -104,15 +103,29 @@ public class playerController : MonoBehaviourPun
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Interact")) return;
-        target = collision.GetComponentInParent<IInteractable>();
+        if (collision.CompareTag("Interact"))
+        {
+            target = collision.GetComponentInParent<IInteractable>();
+        }
+        if (collision.CompareTag("Npc"))
+        {
+         
+            currentNpc = collision.GetComponentInParent<NPCInteract>();
+            Debug.Log($"currentNpc 세팅됨? {(currentNpc != null)}");
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Interact")) return;
-    
-        var t = collision.GetComponentInParent<IInteractable>();
-        if (t != null && t == target) target = null;
+        if (collision.CompareTag("Interact"))
+        {
+            var t = collision.GetComponentInParent<IInteractable>();
+            if (t != null && t == target) target = null;
+        }
+        if (collision.CompareTag("Npc"))
+        {
+            var npc = collision.GetComponentInParent<NPCInteract>();
+            if (npc != null && npc == currentNpc) currentNpc = null;
+        }
     }
     void ApplyViewByRole()
     {

@@ -21,12 +21,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject KeypadPanel;
     [SerializeField] TMP_Text inputPasswordText;
     [SerializeField] Image inputTextPanel;
+
     private void Start()
     {
         KeypadPanel.SetActive(false);
         mirrorPuzzleHintPanel.SetActive(false);
     }
-
+    #region keyPad
     public void OpenKeyPad(int puzzleId)
     {
         if (currentPuzzleId != -1) return;
@@ -71,9 +72,9 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         inputTextPanel.color = color;
     }
+    #endregion
 
-
-
+    #region mirror
     [SerializeField] private GameObject mirrorPuzzleHintPanel;
     public void OpenMirrorPuzzleHint()
     {
@@ -83,4 +84,7 @@ public class UIManager : MonoBehaviour
     {
         mirrorPuzzleHintPanel.SetActive(false);
     }
+    #endregion
+
+   
 }

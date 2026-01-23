@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Interact
   - Mirror
+  - Npc
   layers:
   - Default
   - TransparentFX

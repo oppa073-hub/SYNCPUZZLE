@@ -20,11 +20,11 @@ public class InputHandler : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext ctx)
     {
-        if (ctx.started)
-        {
-            if (player.target == null) return;
-            player.PlayerInteraction(player.target);
-        }
+        if (!ctx.started) return;
+        if (player.target != null) player.PlayerInteraction(player.target);
+        if (player.currentNpc != null) player.currentNpc.TryTalk();
+        else Debug.Log("currentNpc = null");
+        
     }
     private void OnEnable()
     {
