@@ -45,6 +45,7 @@ MonoBehaviour:
   - RPC_LeverPressed
   - RPC_ResetAllLevers
   - RPC_ApplyMirrorRotate
+  - RPC_ReportGoalStateToMaster
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0

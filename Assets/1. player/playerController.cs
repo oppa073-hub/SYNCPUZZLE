@@ -21,6 +21,7 @@ public class playerController : MonoBehaviourPun
     [SerializeField] private InputHandler inputHandler;
     [SerializeField] private CinemachineCamera playerCamera;
     [SerializeField] private Camera mainCam;
+    [SerializeField] private PlayerInput playerInput;
     public NPCInteract currentNpc;
     private float groundCheckDistance = 0.1f;
     Rigidbody2D rigid;
@@ -44,6 +45,7 @@ public class playerController : MonoBehaviourPun
     {
         rigid = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        if (playerInput == null) playerInput = GetComponent<PlayerInput>();
         if (mainCam == null) mainCam = Camera.main;
     }
     void Start()
@@ -51,15 +53,15 @@ public class playerController : MonoBehaviourPun
         if (!photonView.IsMine)
         {
             // 남의 캐릭터
-            playerCamera.gameObject.SetActive(false);
-            inputHandler.enabled = false;
+            if (playerCamera) playerCamera.gameObject.SetActive(false);
+            if (inputHandler) inputHandler.enabled = false;
+            if (playerInput) playerInput.enabled = false;  
+            return;
         }
-        else
-        {
-            // 내 캐릭터
-            playerCamera.gameObject.SetActive(true);
-            inputHandler.enabled = true;
-        }
+        if (playerCamera) playerCamera.gameObject.SetActive(true);
+        if (inputHandler) inputHandler.enabled = true;
+        if (playerInput) playerInput.enabled = true;
+
         if (!photonView.IsMine) return;
 
         if (PhotonNetwork.IsMasterClient)

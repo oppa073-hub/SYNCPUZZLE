@@ -1,17 +1,20 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
 using Unity.Cinemachine;
+using UnityEngine;
 using UnityEngine.InputSystem;
 public class MirrorPuzzleZoneTrigger : MonoBehaviour
 {
     [SerializeField] private CinemachineCamera puzzleCam;
-    PlayerInput playerInput;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            playerInput = collision.GetComponent<PlayerInput>();
+            var pv = collision.GetComponentInParent<PhotonView>();
+            if (pv == null || !pv.IsMine) return;
+            var input = collision.GetComponentInParent<PlayerInput>();
             Debug.Log("dd");
-            PuzzleModeManager.Instance.EnterPuzzleMode(puzzleCam, playerInput);
+            PuzzleModeManager.Instance.EnterPuzzleMode(puzzleCam, input);
         }
        
     }
