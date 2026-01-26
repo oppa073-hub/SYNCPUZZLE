@@ -49,7 +49,7 @@ public class StageManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom == null) return;
 
         int roomCount = PhotonNetwork.CurrentRoom.PlayerCount;
-
+        UIManager.Instance.UpdateGoalUI(playersInGoal);
         // 방 인원수만큼 모두 true 인지 확인
         // 1 playersInGoal에 방 인원이 전부 들어와있는지
         // 2 그 전부가 true인지
@@ -67,9 +67,9 @@ public class StageManager : MonoBehaviourPunCallbacks
 
         // 여기까지 오면 전원 도착
         isLoading = true;
-        playersInGoal.Clear();
 
         PhotonNetwork.LoadLevel(nextSceneName);
+        playersInGoal.Clear();
     }
 
     public override void OnLeftRoom()

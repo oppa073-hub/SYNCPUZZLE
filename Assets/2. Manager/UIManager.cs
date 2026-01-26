@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Photon.Pun;
+using Photon.Realtime;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,11 +24,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject KeypadPanel;
     [SerializeField] TMP_Text inputPasswordText;
     [SerializeField] Image inputTextPanel;
+    [SerializeField] GameObject goalTextPanel;
+    [SerializeField] TMP_Text goalText;
 
     private void Start()
     {
         KeypadPanel.SetActive(false);
         mirrorPuzzleHintPanel.SetActive(false);
+        goalTextPanel.SetActive(false);
     }
     #region keyPad
     public void OpenKeyPad(int puzzleId)
@@ -86,5 +92,18 @@ public class UIManager : MonoBehaviour
     }
     #endregion
 
-   
+    public void UpdateGoalUI(Dictionary<int, bool> playersInGoal)
+    {
+        int count = 0;
+        int total = PhotonNetwork.CurrentRoom.PlayerCount;
+
+        foreach (var p in PhotonNetwork.PlayerList)
+        {
+            if (playersInGoal.TryGetValue(p.ActorNumber, out bool inGoal) && inGoal)
+                count++;
+        }
+
+        goalTextPanel.SetActive(count > 0);
+        goalText.text = $"{count}/{total}";
+    }
 }
