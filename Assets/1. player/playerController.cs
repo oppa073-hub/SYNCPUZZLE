@@ -27,6 +27,7 @@ public class playerController : MonoBehaviourPun
     [SerializeField] private RuntimeAnimatorController animB;
     [SerializeField] private SpriteRenderer body;
 
+    public Collider2D confiner;
     public NPCInteract currentNpc;
     private float groundCheckDistance = 0.1f;
     Rigidbody2D rigid;
@@ -69,6 +70,7 @@ public class playerController : MonoBehaviourPun
     {
         rigid = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        confiner = GetComponent<Collider2D>();
         if (playerInput == null) playerInput = GetComponent<PlayerInput>();
         if (photonView.IsMine && mainCam == null) mainCam = Camera.main;
     }

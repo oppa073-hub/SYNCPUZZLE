@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: terrain_sand_block_right_0
+  m_Name: terrain_grass_horizontal_middle_0
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.Tilemaps.Tile
-  m_Sprite: {fileID: 1130086375959305746, guid: 7cc73a0692199694f8e4ca4dfd3463a6, type: 3}
+  m_Sprite: {fileID: 6818874880351788203, guid: e4239980c7a78524ea5175c77cc72b45, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
