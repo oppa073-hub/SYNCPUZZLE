@@ -92,17 +92,8 @@ public class UIManager : MonoBehaviour
     }
     #endregion
 
-    public void UpdateGoalUI(Dictionary<int, bool> playersInGoal)
+    public void UpdateGoalUI(int count, int total)
     {
-        int count = 0;
-        int total = PhotonNetwork.CurrentRoom.PlayerCount;
-
-        foreach (var p in PhotonNetwork.PlayerList)
-        {
-            if (playersInGoal.TryGetValue(p.ActorNumber, out bool inGoal) && inGoal)
-                count++;
-        }
-
         goalTextPanel.SetActive(count > 0);
         goalText.text = $"{count}/{total}";
     }

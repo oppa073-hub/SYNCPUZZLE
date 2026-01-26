@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 279644306334380183}
   - component: {fileID: -4762810408005093838}
   - component: {fileID: 3572874215742811581}
+  - component: {fileID: 3048580786904768736}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -275,6 +276,9 @@ MonoBehaviour:
   playerCamera: {fileID: 2695600043634649622}
   mainCam: {fileID: 0}
   playerInput: {fileID: 279644306334380183}
+  animA: {fileID: 9100000, guid: de8246ef7c96c154d9bc0a826b021f0b, type: 2}
+  animB: {fileID: 9100000, guid: 3f99be3f648cb3642a906b6d217c9dff, type: 2}
+  body: {fileID: 7024513360584095227}
   currentNpc: {fileID: 0}
 --- !u!70 &1810824065884294742
 CapsuleCollider2D:
@@ -554,3 +558,25 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!95 &3048580786904768736
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4886046711511212362}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 34ef02c5d4ac89a4696080ee214e33ef, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

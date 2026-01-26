@@ -38,9 +38,31 @@ public class StageManager : MonoBehaviourPunCallbacks
 
         // 기록
         playersInGoal[actor] = inGoal;
-
+        BroadcastGoalUI();
         // 판정
         CheckAllPlayersInGoal_AndLoad();
+    }
+    [PunRPC]
+    private void RPC_UpdateGoalUI(int count, int total)
+    {
+        if (UIManager.Instance != null)
+            UIManager.Instance.UpdateGoalUI(count, total);
+    }
+    private void BroadcastGoalUI()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+        if (PhotonNetwork.CurrentRoom == null) return;
+
+        int total = PhotonNetwork.CurrentRoom.PlayerCount;
+
+        int count = 0;
+        foreach (Player p in PhotonNetwork.PlayerList)
+        {
+            if (playersInGoal.TryGetValue(p.ActorNumber, out bool inGoal) && inGoal)
+                count++;
+        }
+
+        photonView.RPC(nameof(RPC_UpdateGoalUI), RpcTarget.All, count, total);
     }
 
     private void CheckAllPlayersInGoal_AndLoad()
@@ -49,7 +71,7 @@ public class StageManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom == null) return;
 
         int roomCount = PhotonNetwork.CurrentRoom.PlayerCount;
-        UIManager.Instance.UpdateGoalUI(playersInGoal);
+
         // 방 인원수만큼 모두 true 인지 확인
         // 1 playersInGoal에 방 인원이 전부 들어와있는지
         // 2 그 전부가 true인지
@@ -67,7 +89,7 @@ public class StageManager : MonoBehaviourPunCallbacks
 
         // 여기까지 오면 전원 도착
         isLoading = true;
-
+        BroadcastGoalUI();
         PhotonNetwork.LoadLevel(nextSceneName);
         playersInGoal.Clear();
     }
@@ -84,6 +106,7 @@ public class StageManager : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsMasterClient) return;
 
         playersInGoal.Remove(otherPlayer.ActorNumber);
+        BroadcastGoalUI();
         CheckAllPlayersInGoal_AndLoad();
     }
 
@@ -93,5 +116,6 @@ public class StageManager : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsMasterClient) return;
 
         playersInGoal[newPlayer.ActorNumber] = false;
+        BroadcastGoalUI();
     }
 }
