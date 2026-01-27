@@ -94,4 +94,11 @@ public class UIManager : MonoBehaviour
         goalTextPanel.SetActive(count > 0);
         goalText.text = $"{count}/{total}";
     }
+    public void BindGoalWorldUI(GameObject panel, TMP_Text text)
+    {
+        goalTextPanel = panel;
+        goalText = text;
+
+        if (goalTextPanel) goalTextPanel.SetActive(false);
+    }
 }

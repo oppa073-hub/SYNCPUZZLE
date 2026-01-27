@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3031513363079015856}
   - component: {fileID: 691565667330664975}
   - component: {fileID: 5691386073277380664}
+  - component: {fileID: 8239288792798817123}
   m_Layer: 0
   m_Name: Goal
   m_TagString: Untagged
@@ -93,6 +94,20 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.4343357, y: 2.2639198}
   m_EdgeRadius: 0
+--- !u!114 &8239288792798817123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3825200150058299483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45d343fd2a599134381b52d5ff70dda7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GoalWorldUIBinder
+  panel: {fileID: 4874698183581123582}
+  goalText: {fileID: 2053989856474109277}
 --- !u!1 &4874698183581123582
 GameObject:
   m_ObjectHideFlags: 0
