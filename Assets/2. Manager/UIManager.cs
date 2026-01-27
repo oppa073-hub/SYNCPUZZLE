@@ -13,12 +13,9 @@ public class UIManager : MonoBehaviour
     int currentPuzzleId = -1;
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     [SerializeField] GameObject KeypadPanel;
