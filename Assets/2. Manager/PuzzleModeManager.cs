@@ -31,6 +31,7 @@ public class PuzzleModeManager : MonoBehaviour
 
         UIManager.Instance.OpenMirrorPuzzleHint();
         mirrorBoard.SetPlayerInput(playerInput);
+        mirrorBoard.SetActiveBoard(true);
         mirrorBoard.enabled = true;
     }
     public void ExitPuzzleModel()
@@ -44,6 +45,7 @@ public class PuzzleModeManager : MonoBehaviour
         playerCam.Priority = 10;
 
         mirrorBoard.ClearPlayerInput();
+        mirrorBoard.SetActiveBoard(false);
         mirrorBoard.enabled = false;
     }
 

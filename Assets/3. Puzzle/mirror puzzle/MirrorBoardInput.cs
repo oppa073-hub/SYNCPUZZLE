@@ -9,7 +9,7 @@ public class MirrorBoardInput : MonoBehaviour
     int puzzleId = 5;
     private PlayerInput playerInput;
     private InputAction clickAction;
-
+    private bool isActiveBoard;
     public void SetPlayerInput(PlayerInput input)
     {
         ClearPlayerInput();
@@ -17,6 +17,7 @@ public class MirrorBoardInput : MonoBehaviour
         playerInput = input;
 
         clickAction = playerInput.actions["Click"];
+        clickAction.performed -= OnClick;
         clickAction.performed += OnClick;
     }
     public void ClearPlayerInput()
@@ -34,8 +35,8 @@ public class MirrorBoardInput : MonoBehaviour
     }
     public void OnClick(InputAction.CallbackContext ctx)
     {
-       
-        if (!ctx.performed) return;
+        if (!ctx.ReadValueAsButton()) return;
+        if (!isActiveBoard) return;
 
         Vector3 mousePos = Mouse.current.position.ReadValue();
         mousePos.z = Mathf.Abs(puzzleCam.transform.position.z);
@@ -48,6 +49,10 @@ public class MirrorBoardInput : MonoBehaviour
 
         // 마스터에게 회전 요청
         PuzzleManager.Instance.RequestPress(puzzleId, 0, mirror.mirrorIndex);
+    }
+    public void SetActiveBoard(bool active)
+    {
+        isActiveBoard = active;
     }
 }
 
