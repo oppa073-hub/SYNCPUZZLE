@@ -9,8 +9,8 @@ public class LaserEmitter2D : MonoBehaviour
 
     [Header("Ray Settings")]
     [SerializeField] private LayerMask hitMask;     
-    [SerializeField] private int maxBounces = 10;
-    [SerializeField] private float maxDistance = 30f;
+    [SerializeField] private int maxBounces = 15;
+    [SerializeField] private float maxDistance = 100f;
     [SerializeField] private float hitOffset = 0.2f;
 
     [Header("State")]
