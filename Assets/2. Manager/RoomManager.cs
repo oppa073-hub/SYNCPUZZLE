@@ -60,7 +60,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.CurrentRoom.IsVisible = false;
-        PhotonNetwork.LoadLevel("InGame");
+        PhotonNetwork.LoadLevel("Stage1");
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)

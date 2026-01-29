@@ -10,13 +10,4 @@ public class KeypadTerminal : MonoBehaviour, IInteractable
         UIManager.Instance.OpenKeyPad(puzzleId);
     }
 
-    public void OnClickEnterBtn()
-    {
-        UIManager.Instance.OnKeypadEnter();
-    }
-    public void OnClickExitBtn()
-    {
-        UIManager.Instance.CloseKeyPad();
-    }
-
 }

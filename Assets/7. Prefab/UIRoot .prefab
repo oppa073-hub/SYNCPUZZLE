@@ -273,6 +273,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: KeyPad
       objectReference: {fileID: 0}
+    - target: {fileID: 4196515290231469652, guid: 283ae070847b53d4fafbd784fa7575f9, type: 3}
+      propertyPath: m_Name
+      value: ExitButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 6411177819239554760, guid: 283ae070847b53d4fafbd784fa7575f9, type: 3}
+      propertyPath: m_Name
+      value: EnterButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8552929295777365463, guid: 283ae070847b53d4fafbd784fa7575f9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

@@ -4,9 +4,12 @@ using UnityEngine.SceneManagement;
 
 public class ServerConnector : MonoBehaviourPunCallbacks
 {
+    [SerializeField] private AudioClip bgmSfx;
+
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
+        AudioManager.instance.PlayBGM(bgmSfx);
     }
 
     public void ConnectToServer()  //버튼 연결 메서드
@@ -20,7 +23,9 @@ public class ServerConnector : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("마스터 서버 연결");
+        //AudioManager.instance.StopBGM();
         SceneManager.LoadScene("Lobby");
+
     }
 
 }

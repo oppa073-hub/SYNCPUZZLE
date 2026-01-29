@@ -23,12 +23,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] Image inputTextPanel;
     [SerializeField] GameObject goalTextPanel;
     [SerializeField] TMP_Text goalText;
-
+    Button KeypadenterBtn;
+    Button KeypadexitBtn;
     private void Start()
     {
         KeypadPanel.SetActive(false);
         mirrorPuzzleHintPanel.SetActive(false);
-        goalTextPanel.SetActive(false);
+        BindKeypadButtons();
+        goalTextPanel.SetActive(false); 
     }
     #region keyPad
     public void OpenKeyPad(int puzzleId)
@@ -100,5 +102,25 @@ public class UIManager : MonoBehaviour
         goalText = text;
 
         if (goalTextPanel) goalTextPanel.SetActive(false);
+    }
+    void BindKeypadButtons()
+    {
+        if (!KeypadPanel) return;
+
+        KeypadenterBtn = KeypadPanel.transform.Find("EnterButton")?.GetComponent<Button>();
+
+        KeypadexitBtn = KeypadPanel.transform.Find("ExitButton")?.GetComponent<Button>();
+
+        if (KeypadenterBtn != null)
+        {
+            KeypadenterBtn.onClick.RemoveAllListeners();
+            KeypadenterBtn.onClick.AddListener(OnKeypadEnter);
+        }
+
+        if (KeypadexitBtn != null)
+        {
+            KeypadexitBtn.onClick.RemoveAllListeners();
+            KeypadexitBtn.onClick.AddListener(CloseKeyPad);
+        }
     }
 }

@@ -1,14 +1,14 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class StageManager : MonoBehaviourPunCallbacks
 {
     public static StageManager instance { get; private set; }
-
-    [SerializeField] private string nextSceneName;
-
+    string[] stageSceneNames;
+    int currentStageIndex = 0;
     // key = ActorNumber, value = inGoal
     private readonly Dictionary<int, bool> playersInGoal = new Dictionary<int, bool>();
 
@@ -19,6 +19,11 @@ public class StageManager : MonoBehaviourPunCallbacks
         if (instance != null && instance != this) { Destroy(gameObject); return; }
         instance = this;
         DontDestroyOnLoad(gameObject);
+
+        stageSceneNames = new string[4];
+        stageSceneNames[1] = "Stage2";
+        stageSceneNames[2] = "Stage3";
+
     }
 
     public void ReportGoalState(bool inGoal)
@@ -34,6 +39,7 @@ public class StageManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void RPC_ReportGoalStateToMaster(int actor, bool inGoal, PhotonMessageInfo info)
     {
+
         if (!PhotonNetwork.IsMasterClient) return;
 
         // 기록
@@ -67,6 +73,7 @@ public class StageManager : MonoBehaviourPunCallbacks
 
     private void CheckAllPlayersInGoal_AndLoad()
     {
+
         if (isLoading) return;
         if (PhotonNetwork.CurrentRoom == null) return;
 
@@ -90,10 +97,21 @@ public class StageManager : MonoBehaviourPunCallbacks
         // 여기까지 오면 전원 도착
         isLoading = true;
         BroadcastGoalUI();
-        PhotonNetwork.LoadLevel(nextSceneName);
+        int nextIndex = currentStageIndex + 1;
+
+        PhotonNetwork.LoadLevel(stageSceneNames[nextIndex]);
+        currentStageIndex = nextIndex;
+        StartCoroutine(ResetLoadingNextFrame());
+    }
+    private IEnumerator ResetLoadingNextFrame()
+    {
+        // 최소 1~2프레임 기다리기
+        yield return null;
+        yield return null;
+
+        isLoading = false;
         playersInGoal.Clear();
     }
-
     public override void OnLeftRoom()
     {
         playersInGoal.Clear();
