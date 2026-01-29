@@ -171,7 +171,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f01ecf981be37743be0f396f83bb525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageManager
-  nextSceneName: Stage3
 --- !u!4 &56335359
 Transform:
   m_ObjectHideFlags: 0
@@ -611,6 +610,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9aa2c06967149b4a8249c6f078a05a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomManager
+  clikcSfx: {fileID: 8300000, guid: bf4a4cbb862785e4a815d2339130a223, type: 3}
+  bgmSfx: {fileID: 8300000, guid: f80676d894174e148a4db778583a0a57, type: 3}
   roomBtn: {fileID: 1538522621}
 --- !u!4 &1556184270
 Transform:

@@ -2503,6 +2503,7 @@ MonoBehaviour:
   randomBtn: {fileID: 1222696691}
   exitBtn: {fileID: 355573158}
   bgmSfx: {fileID: 8300000, guid: 4128a4baaa47f8249b149187f12ffcc5, type: 3}
+  clikcSfx: {fileID: 8300000, guid: bf4a4cbb862785e4a815d2339130a223, type: 3}
 --- !u!4 &2046984621
 Transform:
   m_ObjectHideFlags: 0

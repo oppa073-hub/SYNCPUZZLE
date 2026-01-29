@@ -736,6 +736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ServerConnector
   bgmSfx: {fileID: 8300000, guid: f28564430a62db84c87f40b06c6f1066, type: 3}
+  clikcSfx: {fileID: 8300000, guid: bf4a4cbb862785e4a815d2339130a223, type: 3}
 --- !u!4 &1967261734
 Transform:
   m_ObjectHideFlags: 0
@@ -882,8 +883,8 @@ MonoBehaviour:
   sfxSource: {fileID: 1979408931}
   bgmVolume: 0.6
   sfxVolume: 0.8
-  selectSfx: {fileID: 0}
-  jumpSfx: {fileID: 0}
+  selectSfx: {fileID: 8300000, guid: 7bfc35f832a039b46b7fda4d96bdc769, type: 3}
+  jumpSfx: {fileID: 8300000, guid: ad99509c7c1252840ba536facb23c4ec, type: 3}
   disappearSfx: {fileID: 0}
   bumpSfx: {fileID: 0}
 --- !u!4 &1979408933

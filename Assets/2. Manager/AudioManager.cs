@@ -38,7 +38,14 @@ public class AudioManager : MonoBehaviour
     {
         sfxSource.PlayOneShot(clip, sfxVolume);
     }
-
+    public void PlayJump()
+    {
+        sfxSource.PlayOneShot(jumpSfx, sfxVolume);
+    }
+    public void PlaySelect()
+    {
+        sfxSource.PlayOneShot(selectSfx, sfxVolume);
+    }
     public void FadeBGM(AudioClip nextClip, float fadeOut = 0.3f, float fadeIn = 0.3f)
     {
         if (fadeCo != null) StopCoroutine(fadeCo);

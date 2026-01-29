@@ -103,6 +103,7 @@ public class playerController : MonoBehaviourPun
         GroundCheck();
         if (isGround)
         {
+            AudioManager.instance.PlayJump();
             rigid.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
         }
 
@@ -111,7 +112,7 @@ public class playerController : MonoBehaviourPun
     {
         ICommand cmd = new InteractionCommand(target,this);
         OnInteract?.Invoke(cmd);
-        
+        AudioManager.instance.PlaySelect();
     }
 
     private void GroundCheck()

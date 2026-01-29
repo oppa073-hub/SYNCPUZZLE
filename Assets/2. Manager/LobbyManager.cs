@@ -21,6 +21,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] Button exitBtn; 
     
     [SerializeField] private AudioClip bgmSfx;
+    [SerializeField] private AudioClip clikcSfx;
 
     private void Start()
     {
@@ -51,12 +52,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
    
     public void CreateRoom()
     {
+        AudioManager.instance.PlaySFX(clikcSfx);
         Debug.Log($"State={PhotonNetwork.NetworkClientState} InLobby={PhotonNetwork.InLobby} InRoom={PhotonNetwork.InRoom} IsConnected={PhotonNetwork.IsConnected}");
 
         PhotonNetwork.CreateRoom(createRoomInput.text, new RoomOptions { MaxPlayers = 2 });  //인풋필드에 들어있던 내용의 이름으로 방 생성
     }
     public void JoinRandomRoom()
     {
+        AudioManager.instance.PlaySFX(clikcSfx);
         Debug.Log($"State={PhotonNetwork.NetworkClientState} InLobby={PhotonNetwork.InLobby} InRoom={PhotonNetwork.InRoom} IsConnected={PhotonNetwork.IsConnected}");
 
         if (!PhotonNetwork.InLobby)
@@ -74,6 +77,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     public void JoinRoom()
     {
+        AudioManager.instance.PlaySFX(clikcSfx);
         Debug.Log($"State={PhotonNetwork.NetworkClientState} InLobby={PhotonNetwork.InLobby} InRoom={PhotonNetwork.InRoom} IsConnected={PhotonNetwork.IsConnected}");
 
         if (PhotonNetwork.InLobby == true)
@@ -92,6 +96,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     public void ExitLobby()
     {
+        AudioManager.instance.PlaySFX(clikcSfx);
         PhotonNetwork.LeaveLobby();  //로비 떠나라고 포톤에게 지시
         SceneManager.LoadScene("Title");
     }

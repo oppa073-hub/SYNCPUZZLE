@@ -9,6 +9,8 @@ using System.Collections;
 public class RoomManager : MonoBehaviourPunCallbacks
 {
     public static RoomManager Instance { get; private set; }
+    [SerializeField] private AudioClip clikcSfx;
+    [SerializeField] private AudioClip bgmSfx;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -20,8 +22,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
     }
     private void Start()
     {
-       
-       StartCoroutine(StartRoutine());
+        AudioManager.instance.PlayBGM(bgmSfx);
+        StartCoroutine(StartRoutine());
        
     }
   
@@ -57,7 +59,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public void StartGame()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-
+        AudioManager.instance.PlaySFX(clikcSfx);
         PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.CurrentRoom.IsVisible = false;
         PhotonNetwork.LoadLevel("Stage1");
