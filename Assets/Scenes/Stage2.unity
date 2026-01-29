@@ -1310,6 +1310,51 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a195186cdc8f5bd4cbb20569eb42d4fa, type: 3}
+--- !u!1 &1251656341
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1251656343}
+  - component: {fileID: 1251656342}
+  m_Layer: 0
+  m_Name: StageBGM
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1251656342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1251656341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2006b5a04b6eeef48b1276875080f600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StageBGM
+  bgm: {fileID: 8300000, guid: 32b5657f0bf72a4449e00e8ebc5b4647, type: 3}
+--- !u!4 &1251656343
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1251656341}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.14185, y: 3.41929, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1284147390
 GameObject:
   m_ObjectHideFlags: 0
@@ -3793,3 +3838,4 @@ SceneRoots:
   - {fileID: 1641932385}
   - {fileID: 1192133942}
   - {fileID: 1164783589}
+  - {fileID: 1251656343}

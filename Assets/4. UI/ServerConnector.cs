@@ -9,9 +9,12 @@ public class ServerConnector : MonoBehaviourPunCallbacks
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
+
+    }
+    private void Start()
+    {
         AudioManager.instance.PlayBGM(bgmSfx);
     }
-
     public void ConnectToServer()  //버튼 연결 메서드
     {
         if (PhotonNetwork.IsConnected) { return; }

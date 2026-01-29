@@ -18,9 +18,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] Button createBtn;
     [SerializeField] Button joinBtn;
     [SerializeField] Button randomBtn;
-    [SerializeField] Button exitBtn;
+    [SerializeField] Button exitBtn; 
+    
+    [SerializeField] private AudioClip bgmSfx;
+
     private void Start()
     {
+        AudioManager.instance.PlayBGM(bgmSfx);
         roomHas = new Dictionary<string, GameObject>();
         createBtn.interactable = false;
         joinBtn.interactable = false;
