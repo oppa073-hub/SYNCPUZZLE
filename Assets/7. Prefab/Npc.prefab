@@ -269,6 +269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCInteract
   dialogueData: {fileID: 11400000, guid: 2b89d56e3ded8fc49a462f01e5d61623, type: 2}
   talkUi: {fileID: 1787678912633138011}
+  NpcSfx: {fileID: 8300000, guid: 6b7e9758216b0fc48875b79656abefdc, type: 3}
 --- !u!1 &4850353584313114461
 GameObject:
   m_ObjectHideFlags: 0

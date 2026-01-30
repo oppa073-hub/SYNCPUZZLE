@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98a77704b41b8ee4481a42d3f068e6e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MirrorPuzzleExitBtn
+  exitSfx: {fileID: 8300000, guid: bf4a4cbb862785e4a815d2339130a223, type: 3}
 --- !u!1 &5239863230540620640
 GameObject:
   m_ObjectHideFlags: 0

@@ -36,6 +36,7 @@ public class PuzzleManager : MonoBehaviourPun
     #region Inspector - Puzzle Targets
     [Header("Puzzle 1 (Single Door)")]
     [SerializeField] private GameObject door1;
+    [SerializeField] private AudioClip doorSfx;
 
     [Header("Puzzle 2 (Sync Buttons)")]
     [SerializeField] private float syncWindow = 1.0f; // 몇 초 안에 같이 눌러야 성공?
@@ -48,6 +49,7 @@ public class PuzzleManager : MonoBehaviourPun
     bool passwordSolved = false;
     int keypadOwnerActor = -1;
     [SerializeField] private GameObject blocker;
+    [SerializeField] private AudioClip keyPadFalseSfx;
 
     [Header("Puzzle 4 (SwitchMatrix (Lever))")]
     [SerializeField] private GameObject blocker2;
@@ -281,7 +283,11 @@ public class PuzzleManager : MonoBehaviourPun
         // Puzzle 1
         if (puzzleId == 1)
         {
-            if (solved && door1) door1.SetActive(false);
+            if (solved && door1)
+            {
+                door1.SetActive(false);
+                AudioManager.instance.PlaySFX(doorSfx);
+            }
             return;
         }
 
@@ -290,7 +296,11 @@ public class PuzzleManager : MonoBehaviourPun
         {
             if (solved)
             {
-                if (door2) door2.SetActive(false);
+                if (door2)
+                {
+                    door2.SetActive(false);
+                    AudioManager.instance.PlaySFX(doorSfx);
+                }
                 buttonARef?.SetSolved(true);
                 buttonBRef?.SetSolved(true);
             }
@@ -307,10 +317,12 @@ public class PuzzleManager : MonoBehaviourPun
             {
                 UIManager.Instance.CloseKeyPad();
                 blocker.SetActive(false);
+                AudioManager.instance.PlaySFX(doorSfx);
             }
             else
             {
                 UIManager.Instance.OnKeypadFail();
+                AudioManager.instance.PlaySFX(keyPadFalseSfx);
             }
         }
         if (puzzleId == 4)
@@ -318,7 +330,11 @@ public class PuzzleManager : MonoBehaviourPun
             if (switchMatrixSolved) return;
             if (solved)
             {
-                if (blocker2) blocker2.SetActive(false);
+                if (blocker2)
+                {
+                    blocker2.SetActive(false);
+                    AudioManager.instance.PlaySFX(doorSfx);
+                }
                 for (int i = 0; i < leverAnswer.Length; i++)
                 {
                     levers[i]?.SetSolved(solved);
@@ -338,6 +354,7 @@ public class PuzzleManager : MonoBehaviourPun
             if (solved)
             {
                 mirrorDoor.SetActive(false);
+                AudioManager.instance.PlaySFX(doorSfx);
             }
 
         }

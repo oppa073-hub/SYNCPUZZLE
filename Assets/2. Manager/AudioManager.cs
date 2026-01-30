@@ -16,7 +16,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip jumpSfx;
     [SerializeField] private AudioClip disappearSfx;
     [SerializeField] private AudioClip bumpSfx;
-
+    [SerializeField] private AudioClip keyPadSfx;
     private void Awake()
     {
         if (instance != null && instance != this) { Destroy(gameObject); return; }
@@ -45,6 +45,10 @@ public class AudioManager : MonoBehaviour
     public void PlaySelect()
     {
         sfxSource.PlayOneShot(selectSfx, sfxVolume);
+    }
+    public void PlayKeyPad()
+    {
+        sfxSource.PlayOneShot(keyPadSfx, sfxVolume);
     }
     public void FadeBGM(AudioClip nextClip, float fadeOut = 0.3f, float fadeIn = 0.3f)
     {

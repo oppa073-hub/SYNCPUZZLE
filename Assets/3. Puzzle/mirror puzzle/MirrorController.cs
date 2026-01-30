@@ -21,6 +21,6 @@ public class MirrorController : MonoBehaviour
 
     public void PlayRotateFx()//사운드
     {
-
+        AudioManager.instance.PlayKeyPad();
     }
 }

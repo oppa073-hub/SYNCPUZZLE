@@ -50,6 +50,7 @@ MonoBehaviour:
   inputTextPanel: {fileID: 2673216922764231055}
   goalTextPanel: {fileID: 0}
   goalText: {fileID: 0}
+  KeypadSfx: {fileID: 8300000, guid: bf4a4cbb862785e4a815d2339130a223, type: 3}
   mirrorPuzzleHintPanel: {fileID: 5679563945311531277}
 --- !u!1 &3045656370817023478
 GameObject:

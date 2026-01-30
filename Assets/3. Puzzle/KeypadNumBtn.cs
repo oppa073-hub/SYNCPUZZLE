@@ -6,6 +6,7 @@ public class KeypadNumBtn : MonoBehaviour
     public void OnKeypadNumBtnClick()
     {
         UIManager.Instance.OnKeypadNumber(number);
+        AudioManager.instance.PlayKeyPad();
         UIManager.Instance.InputPasswordText(number.ToString());
     }
 }

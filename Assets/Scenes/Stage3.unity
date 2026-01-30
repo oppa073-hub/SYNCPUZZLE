@@ -1700,6 +1700,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PuzzleManager
   door1: {fileID: 0}
+  doorSfx: {fileID: 8300000, guid: 9826fe8107411294d9d419b51d960d1a, type: 3}
   syncWindow: 1
   door2: {fileID: 0}
   blocker: {fileID: 0}

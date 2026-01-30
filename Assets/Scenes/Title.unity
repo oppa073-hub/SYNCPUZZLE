@@ -887,6 +887,7 @@ MonoBehaviour:
   jumpSfx: {fileID: 8300000, guid: ad99509c7c1252840ba536facb23c4ec, type: 3}
   disappearSfx: {fileID: 0}
   bumpSfx: {fileID: 0}
+  keyPadSfx: {fileID: 8300000, guid: bf4a4cbb862785e4a815d2339130a223, type: 3}
 --- !u!4 &1979408933
 Transform:
   m_ObjectHideFlags: 0

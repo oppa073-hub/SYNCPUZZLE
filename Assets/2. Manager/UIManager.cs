@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] Image inputTextPanel;
     [SerializeField] GameObject goalTextPanel;
     [SerializeField] TMP_Text goalText;
+    [SerializeField] private AudioClip KeypadSfx;
     Button KeypadenterBtn;
     Button KeypadexitBtn;
     private void Start()
@@ -44,6 +45,7 @@ public class UIManager : MonoBehaviour
     public void CloseKeyPad()
     {
         if (currentPuzzleId == -1) return;
+        AudioManager.instance.PlaySFX(KeypadSfx);
         PuzzleManager.Instance.RequestPress(currentPuzzleId, 8, 0);
         KeypadPanel.SetActive(false); 
         currentPuzzleId = -1;
@@ -56,6 +58,7 @@ public class UIManager : MonoBehaviour
     public void OnKeypadEnter()
     {
         if (currentPuzzleId == -1) return;
+        AudioManager.instance.PlaySFX(KeypadSfx);
         PuzzleManager.Instance.RequestPress(currentPuzzleId, 1, 0);
         inputPasswordText.text = "";
     }

@@ -6,6 +6,7 @@ public class MirrorBoardInput : MonoBehaviour
     [SerializeField] private Camera puzzleCam;
     [SerializeField] private LayerMask mirrorHitLayer;
     [SerializeField] private float clickRadius = 0.15f;
+    [SerializeField] private AudioClip mirrorSfx;
     int puzzleId = 5;
     private PlayerInput playerInput;
     private InputAction clickAction;
@@ -37,7 +38,6 @@ public class MirrorBoardInput : MonoBehaviour
     {
         if (!ctx.ReadValueAsButton()) return;
         if (!isActiveBoard) return;
-
         Vector3 mousePos = Mouse.current.position.ReadValue();
         mousePos.z = Mathf.Abs(puzzleCam.transform.position.z);
         Vector2 worldPos = puzzleCam.ScreenToWorldPoint(mousePos);
