@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 public class ServerConnector : MonoBehaviourPunCallbacks
 {
     [SerializeField] private AudioClip bgmSfx;
-    [SerializeField] private AudioClip clikcSfx;
 
     private void Awake()
     {
@@ -26,11 +25,12 @@ public class ServerConnector : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        AudioManager.instance.PlaySFX(clikcSfx);
         Debug.Log("마스터 서버 연결");
-        //AudioManager.instance.StopBGM();
-        SceneManager.LoadScene("Lobby");
-
+        //AudioManager.instance.StopBGM()
+        if (PhotonNetwork.IsConnected) { return; }
+        PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "kr";
+        PhotonNetwork.PhotonServerSettings.AppSettings.UseNameServer = true;
+        PhotonNetwork.ConnectUsingSettings();
     }
 
 }
