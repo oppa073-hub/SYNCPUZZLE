@@ -20,10 +20,11 @@ public class StageManager : MonoBehaviourPunCallbacks
         instance = this;
         DontDestroyOnLoad(gameObject);
 
-        stageSceneNames = new string[4];
+        stageSceneNames = new string[5];
         stageSceneNames[1] = "Stage2";
         stageSceneNames[2] = "Stage3";
         stageSceneNames[3] = "Stage4";
+        stageSceneNames[4] = "Ending";
 
     }
 
