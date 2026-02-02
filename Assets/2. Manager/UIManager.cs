@@ -31,7 +31,7 @@ public class UIManager : MonoBehaviour
         KeypadPanel.SetActive(false);
         mirrorPuzzleHintPanel.SetActive(false);
         BindKeypadButtons();
-        goalTextPanel.SetActive(false); 
+       if (goalTextPanel != null) goalTextPanel.SetActive(false); 
     }
     #region keyPad
     public void OpenKeyPad(int puzzleId)
@@ -96,6 +96,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateGoalUI(int count, int total)
     {
+        if (goalTextPanel == null) return;
         goalTextPanel.SetActive(count > 0);
         goalText.text = $"{count}/{total}";
     }
