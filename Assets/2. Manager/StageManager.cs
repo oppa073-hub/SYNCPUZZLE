@@ -23,6 +23,7 @@ public class StageManager : MonoBehaviourPunCallbacks
         stageSceneNames = new string[4];
         stageSceneNames[1] = "Stage2";
         stageSceneNames[2] = "Stage3";
+        stageSceneNames[3] = "Stage4";
 
     }
 

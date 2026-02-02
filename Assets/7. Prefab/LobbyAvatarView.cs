@@ -16,8 +16,6 @@ public class LobbyAvatarView : MonoBehaviour
         if (animator == null) animator = GetComponent<Animator>();
         animator.runtimeAnimatorController = (role == PlayerRole.A) ? animA : animB;
 
-        animator.Play("Idle", 0, 0f);
-
         if (body) body.flipX = false;
     }
 }

@@ -166,6 +166,8 @@ GameObject:
   - component: {fileID: -4762810408005093838}
   - component: {fileID: 3572874215742811581}
   - component: {fileID: 3048580786904768736}
+  - component: {fileID: 8926205285980187012}
+  - component: {fileID: 7104884385649483551}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -602,3 +604,30 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8926205285980187012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4886046711511212362}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46d4aa93a58d8ab4397a92e4a73bf2bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RopeConstraint2D
+  maxDistance: 5
+  stiffness: 35
+  damping: 8
+--- !u!114 &7104884385649483551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4886046711511212362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5765275577055ef43999f1c94511301a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RopeStageActivator
