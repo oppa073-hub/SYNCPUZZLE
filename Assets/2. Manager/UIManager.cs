@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -24,14 +25,18 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject goalTextPanel;
     [SerializeField] TMP_Text goalText;
     [SerializeField] private AudioClip KeypadSfx;
+    [SerializeField] private GameObject leavePanel;
+    [SerializeField] private TMP_Text leaveText;
     Button KeypadenterBtn;
     Button KeypadexitBtn;
+    private Coroutine leaveCo;
     private void Start()
     {
         KeypadPanel.SetActive(false);
         mirrorPuzzleHintPanel.SetActive(false);
         BindKeypadButtons();
-       if (goalTextPanel != null) goalTextPanel.SetActive(false); 
+       if (goalTextPanel != null) goalTextPanel.SetActive(false);
+        if (leavePanel != null) leavePanel.SetActive(false);
     }
     #region keyPad
     public void OpenKeyPad(int puzzleId)
@@ -126,5 +131,31 @@ public class UIManager : MonoBehaviour
             KeypadexitBtn.onClick.RemoveAllListeners();
             KeypadexitBtn.onClick.AddListener(CloseKeyPad);
         }
+    }
+
+    public void ShowLeaveAndReturn(string nick)
+    {
+        // 중복 호출 방지
+        if (leaveCo != null) StopCoroutine(leaveCo);
+        leaveCo = StartCoroutine(CoShowLeaveAndReturn(nick));
+    }
+    private IEnumerator CoShowLeaveAndReturn(string nick)
+    {
+        if (leaveText) leaveText.text = $"{nick} 님이 나갔습니다.\n로비로 이동합니다...";
+        if (leavePanel) leavePanel.SetActive(true);
+
+        yield return new WaitForSeconds(2f);
+
+        if (PhotonNetwork.InRoom)
+            PhotonNetwork.LeaveRoom(); 
+        else
+            SceneManager.LoadScene("Lobby");
+    }
+    public void HideLeaveUI()
+    {
+        if (leaveCo != null) StopCoroutine(leaveCo);
+        leaveCo = null;
+
+        if (leavePanel) leavePanel.SetActive(false);
     }
 }
