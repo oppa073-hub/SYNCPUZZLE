@@ -67,4 +67,48 @@ public class SpawnManager : MonoBehaviourPunCallbacks
         }
         return false;
     }
+    public Vector3 GetSpawnPosForActor(int actorNumber)
+    {
+        if (Spawn == null || Spawn.Count == 0) return Vector3.zero;
+
+        int raw = actorNumber - 1;
+        int idx = Mathf.Clamp(raw, 0, Spawn.Count - 1);
+        return Spawn[idx];
+    }
+    [PunRPC]
+    private void RPC_RespawnAll()
+    {
+        // 각 클라에서 "내 플레이어"만 찾아서 텔레포트
+        var controllers = FindObjectsByType<playerController>(FindObjectsSortMode.None);
+
+        for (int i = 0; i < controllers.Length; i++)
+        {
+            var pc = controllers[i];
+            if (pc == null) continue;
+            if (pc.photonView == null) continue;
+            if (!pc.photonView.IsMine) continue;   // 로컬 플레이어만
+
+            Vector3 spawnPos = GetSpawnPosForActor(PhotonNetwork.LocalPlayer.ActorNumber);
+            pc.TeleportTo(spawnPos);            
+            break;
+        }
+    }
+    public void RequestRespawnAll()
+    {
+        if (!PhotonNetwork.InRoom) return;
+
+        //마스터만 전체 리스폰을 지시
+        if (PhotonNetwork.IsMasterClient)
+            photonView.RPC(nameof(RPC_RespawnAll), RpcTarget.All);
+        else
+            photonView.RPC(nameof(RPC_RequestRespawnAll), RpcTarget.MasterClient);
+    }
+
+    [PunRPC]
+    private void RPC_RequestRespawnAll()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+        photonView.RPC(nameof(RPC_RespawnAll), RpcTarget.All);
+    }
+
 }

@@ -8,6 +8,7 @@ TagManager:
   - Mirror
   - Npc
   - Confiner
+  - DeadZone
   layers:
   - Default
   - TransparentFX

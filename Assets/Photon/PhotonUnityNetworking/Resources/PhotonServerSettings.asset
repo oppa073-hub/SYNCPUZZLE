@@ -49,6 +49,8 @@ MonoBehaviour:
   - RPC_SetRole
   - RPC_UpdateGoalUI
   - RPC_SetFacing
+  - RPC_RequestRespawnAll
+  - RPC_RespawnAll
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0

@@ -152,7 +152,36 @@ public class playerController : MonoBehaviourPun
             currentNpc = collision.GetComponentInParent<NPCInteract>();
             Debug.Log($"currentNpc 세팅됨? {(currentNpc != null)}");
         }
+        if (collision.CompareTag("DeadZone"))
+        {
+            if (!photonView.IsMine) return;
+
+            // 전원 리스폰 요청
+            SpawnManager.Instance.RequestRespawnAll();
+        }
     }
+    public void TeleportTo(Vector3 pos)
+    {
+        // 로컬 플레이어만 이동
+        if (!photonView.IsMine) return;
+
+        // 물리 초기화
+        rigid.linearVelocity = Vector2.zero;
+        rigid.angularVelocity = 0f;
+
+        // 순간이동
+        rigid.position = pos;         
+        rigid.Sleep();                
+
+        // 방향/애니메이션도 초기화
+        moveDir = Vector2.zero;
+        if (animator != null)
+        {
+            animator.SetFloat("MoveSpeed", 0f);
+            animator.SetBool("IsGround", true);
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Interact"))

@@ -31,7 +31,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         joinBtn.interactable = false;
         randomBtn.interactable = false;
 
-       if (!PhotonNetwork.IsConnected)
+        if (!PhotonNetwork.IsConnected)
             PhotonNetwork.ConnectUsingSettings();
         else if (!PhotonNetwork.InLobby)
             PhotonNetwork.JoinLobby();
@@ -39,7 +39,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        PhotonNetwork.JoinLobby();
+        if (!PhotonNetwork.InLobby)
+            PhotonNetwork.JoinLobby();
     }
     public override void OnJoinedLobby()
     {
