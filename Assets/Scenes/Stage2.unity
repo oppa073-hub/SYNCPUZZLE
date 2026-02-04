@@ -1402,6 +1402,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6860951514455772107, guid: f107f2ebe05289f4c94865832a3d8dbd, type: 3}
+      propertyPath: dialogueData
+      value: 
+      objectReference: {fileID: 11400000, guid: 13fc39576b01aa248b1e5cd8882a6b08, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1527,7 +1531,7 @@ GameObject:
   - component: {fileID: 1284147396}
   - component: {fileID: 1284147395}
   - component: {fileID: 1284147394}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}

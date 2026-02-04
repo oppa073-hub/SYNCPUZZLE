@@ -1,7 +1,8 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using System.Collections.Generic;
+using System.Collections;
 public class LoginUI : MonoBehaviour
 {
     [SerializeField] private GameObject authRoot;   // Canvas 또는 AuthPanelRoot
@@ -19,16 +20,18 @@ public class LoginUI : MonoBehaviour
     [SerializeField] private TMP_Text resultText;
 
     [SerializeField] private AudioClip clickSfx;
-
-    private void Start()
+    bool blockClick = true;
+    private IEnumerator Start()
     {
-        // 게임 시작 시 로그인 패널만 보이게
-        ShowLoginPanel();
+        ShowLoginPanel();   
+        yield return null;       
+        yield return new WaitForSeconds(0.2f);
+        blockClick = false;
     }
+
 
     public void ShowLoginPanel()
     {
-        AudioManager.instance.PlaySFX(clickSfx);
         loginPanel.SetActive(true);
         signUpPanel.SetActive(false);
         if (resultText) resultText.text = "";

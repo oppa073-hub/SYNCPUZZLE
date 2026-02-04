@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45ec05132b845094889927dd2f545178, type: 3}
+  m_Name: DD_NPC_Stage4
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueData
+  npcName: "\uAC00\uC774\uB4DC\uC758 \uC694\uC815 \uCD98\uB599\uC774"
+  linesDefault:
+  - "\uC11C\uB85C\uC758 \uBAB8\uC5D0 \uC904\uC774 \uBB36\uC5EC\uC788\uC744\uAC70\uC57C!"
+  - "\uC11C\uB85C \uBA40\uC5B4\uC9C0\uBA74 \uB2F9\uACA8\uC838!"
+  - "\uC544\uB798\uB85C \uB5A8\uC5B4\uC9C0\uBA74 \uB2E4\uC2DC \uCC98\uC74C\uBD80\uD130\uC57C!"
