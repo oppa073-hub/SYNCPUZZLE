@@ -24,7 +24,7 @@ MasterClient 기반 퍼즐 판정 구조를 사용하여
 ## Links
 
 <p align="center">
-<a href="https://www.youtube.com/watch?v=iuVHFhuQx14">
+<a href="https://www.youtube.com/watch?v=FpJFQtIFT6c&t=3s">
     <img src="https://img.shields.io/badge/YouTube-시연영상-red?style=for-the-badge&logo=youtube&logoColor=white"/>
   </a>
 </p>
